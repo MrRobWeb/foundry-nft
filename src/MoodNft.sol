@@ -70,7 +70,9 @@ contract MoodNft is ERC721 {
     // In this logic of removing hidden SLOADs, the `_isApprovedOrOwner` function was removed in favor of a new `_isAuthorized` function. Overrides that used to target the `_isApprovedOrOwner` should now be performed on the `_isAuthorized` function. Calls to `_isApprovedOrOwner` that preceded a call to `_transfer`, `_burn` or `_approve` should be removed in favor of using the `auth` argument in `_update` and `_approve`. This is showcased in `ERC721Burnable.burn` and in `ERC721Wrapper.withdrawTo`.
 
     function flipMood(uint256 tokenId) public view {
-        if (!_isAuthorized(_ownerOf(tokenId), msg.sender, tokenId)) {
+        if (
+            getApproved(tokenId) != msg.sender && ownerOf(tokenId) != msg.sender
+        ) {
             revert MoodNFT__CantFlipMoodIfNotOwner();
         }
 

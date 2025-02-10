@@ -20,9 +20,9 @@ contract DeployMoodNftTest is Test {
 
         string memory actualUri = deployer.svgToImageURI(svg);
 
-        assert(
-            keccak256(abi.encodePacked(expectedUri)) ==
-                keccak256(abi.encodePacked(actualUri))
+        assertEq(
+            keccak256(abi.encodePacked(expectedUri)),
+            keccak256(abi.encodePacked(actualUri))
         );
     }
 }
